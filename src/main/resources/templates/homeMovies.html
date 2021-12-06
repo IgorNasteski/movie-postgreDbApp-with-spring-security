@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- My CSS -->
+	<link rel="stylesheet" href="../css/style.css">
+	<style>
+		/*.verticalAlign{vertical-align: middle !important;}*/
+		th,td{vertical-align: middle !important;}
+		#linkKaNazad{margin: auto !important; display: block; margin-top: 6px; background-color: black; opacity: 0.6;}
+		#linkKaHomePage{margin: auto; display: block; width: fit-content; margin-top: 0px; font-size: 20px; color: white;}
+		tbody{line-height: 1 !important; /*opacity: 0.7 !important; background-color: white !important;*/ color: white;}
+		td{text-align: left !important;}
+		tr{border-style: hidden !important;}
+		#skloniPadding{padding: 0px !important;}
+		td{padding: 0px; !important;}
+		p{margin-bottom: unset;}
+
+		li{padding: 1px;}
+		/*ul:hover {/*background-color: black;*/ /*position: relative; left:10px; bottom: 2px;}*/
+		/*table tbody tr .dodajOpacity{opacity: 88% !important;}*/
+
+		.flex-container {
+			display: flex;
+			flex-wrap: nowrap;
+			width: 31%;
+			margin: 19px auto !important;
+		}
+
+		.flex-container .centrirajFlex {
+			background-color: #f1f1f1;
+			width: 100px;
+			margin: 0px auto;
+			text-align: center;
+			line-height: 75px;
+			font-size: 30px;
+		}
+	</style>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+<!--<body>-->
+<body style="background: url('/img/background5.jpg') no-repeat center center fixed">
+
+	<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>
+
+	<div class="flex-container">
+		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
+			<li class="nav-item">
+				<a th:href="@{../}" class="btn btn-secondary">Top Rated</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{../newPopularMovies}" class="btn btn-secondary">Popular</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{../upcomingMovies}" class="btn btn-secondary">Upcoming</a>
+			</li>
+			<li class="nav-item">
+				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary">Now Playing</a>
+			</li>
+		</ul>
+	</div>
+
+	<table class="table table-borderless" style="margin:40px auto; width:76%; /*color:white;*/">
+		<!--	NE TREBA MI HEADER TABELE	-->
+		<!--<thead class="thead-dark">
+			<tr>
+				<th class="verticalAlign" style="width: 4% !important;"></th>
+				<th class="verticalAlign" style="width: 10% !important;">Movie ID</th>
+				<th class="verticalAlign" style="width: 0% !important;">Popularity</th>
+				<th class="verticalAlign" style="width: 29% !important;%">Movie Description</th>
+				<th class="verticalAlign" style="width: 2% !important;">Release Date</th>
+				<th class="verticalAlign" style="width: 0% !important;">Average Vote</th>
+				<th class="verticalAlign" style="width: 0% !important;">Total Votes</th>
+				<th class="verticalAlign" style="width: 5% !important;">Title</th>
+			</tr>
+		</thead>-->
+
+		<tbody>	<!--<tbody style="background-color: papayawhip; opacity: 0.9;">-->
+			<tr th:each="topRatedMovie : ${topRatedMovieList}">
+				<td id="skloniPadding" style="width: 3% !important;" class="dodajOpacity">
+					<img th:src="${topRatedMovie.moviePosterPath}" class="img-thumbnail"  th:style="'max-width: 87%; max-height: 100%; margin-bottom: 3px; padding:0px !important; border:0px !important;'"/>
+				</td>
+				<td style="width: 4% !important;" class="dodajOpacity">
+					<ul th:style="'margin-bottom: 16px !important; list-style-type:none;'">
+						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Release date:  </span><p th:text="${topRatedMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Popularity:  </span><p th:text="${topRatedMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Vote average:  </span><p th:text="${topRatedMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Total votes  </span><p th:text="${topRatedMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
+						<!--<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span><p th:text="${topRatedMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span>
+							<a th:href="@{../posaljiNaImdbKrozKontroler(nazivFilma=${topRatedMovie.title})}" th:target="_blank" th:style="'position: relative; left: 53px;'" class="btn btn-info btn-sm">IMDB</a>
+						</li>
+
+						<!--<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span><a th:href="@{../posaljiNaImdbKrozKontroler}" th:field="*{title}" th:target="_blank" th:style="'position: relative; left: 53px;'">IMDB</a></li>-->		<!--	<li>Total votes: 4000000</li>		-->
+
+						<!--<a th:href="@{/customers/showFormForUpdate(imdbId=${topRatedMovie.title})}" class="btn btn-info btn-sm">Update</a>-->
+						<!--<a th:href="@{/viewCourse/}" th:field="*{lastName}"><span th:text="${post.course.name}"></span></a>-->
+
+				<!--<td>									<!-- otvori na novom tabu -->
+					<!--<a th:href="${article.urlOfArticle}" th:target="_blank">link</a>	<!-- th:text="${article.urlOfArticle}" -->
+				<!--</td>-->
+
+						<!--Popularity: <li th:text="${topRatedMovie.popularity}" />				<!--	<li>Release date: 2021-14-14</li>	-->
+						<!--Popularity: <li th:text="${topRatedMovie.popularity}" />				<!--	<li>Popularity: 100000</li> 		-->
+						<!--Vote average: <li th:text="${topRatedMovie.movieVotesAverage}" />		<!--	<li>Vote average: 9.2</li>			-->
+						<!--Total votes: <li th:text="${topRatedMovie.numberOfPeopleVoted}" />		<!--	<li>Total votes: 4000000</li>		-->
+					</ul>
+				</td>
+				<td style="width: 19% !important;" class="dodajOpacity">
+					<ul>
+						<h3 th:text="${topRatedMovie.title}"  th:style="'color:grey;'" />					<!--	<h1>The Goodfather</h1>				-->
+						<p th:text="${topRatedMovie.movieOverview}" />			<!--	<p>Opis Filma</p>					-->
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

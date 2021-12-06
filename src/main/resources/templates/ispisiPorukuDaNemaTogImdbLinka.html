@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- My CSS -->
+	<link rel="stylesheet" href="../css/style.css">
+	<style>
+		#msg1, #msg2{max-width: max-content !important; margin: 10px auto; !important;}
+	</style>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+<!--<body>-->
+<body style="background: url('/img/background5.jpg') no-repeat center center fixed">
+
+	<div id="msg2" th:style="'color:white;'">There are no available link to imdb review for this movie.</div>
+	<h1 id="msg1" class="alert alert-info text-center" th:if="${message1}" th:text="${message1}" th:style="'color:white !important;'" />
+	<!--<div id="msg1" class="alert alert-info text-center" th:if="${message1}" th:text="${message1}"></div>-->
+
+</body>
+</html>
