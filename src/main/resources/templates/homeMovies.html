@@ -123,16 +123,16 @@
 	<div class="flex-container" th:style="'margin: -19px auto !important;'">
 		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
 			<li class="nav-item">
-				<a th:href="@{../}" class="btn btn-secondary">Top Rated</a>
+				<a th:href="@{../}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Top Rated</a>
 			</li>
 			<li class="nav-item">
-				<a th:href="@{../newPopularMovies}" class="btn btn-secondary">Popular</a>
+				<a th:href="@{../newPopularMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Popular</a>
 			</li>
 			<li class="nav-item">
-				<a th:href="@{../upcomingMovies}" class="btn btn-secondary">Upcoming</a>
+				<a th:href="@{../upcomingMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Upcoming</a>
 			</li>
 			<li class="nav-item">
-				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary">Now Playing</a>
+				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Now Playing</a>
 			</li>
 		</ul>
 	</div>
@@ -159,12 +159,12 @@
 				</td>
 				<td style="width: 10% !important;" class="dodajOpacity">
 					<span th:style="'margin-bottom: 16px !important; list-style-type:none;'">
-						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Release date:  </span><p th:text="${topRatedMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
-						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Popularity:  </span><p th:text="${topRatedMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
-						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Vote average:  </span><p th:text="${topRatedMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
-						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Total votes  </span><p th:text="${topRatedMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Release date:  </span><p th:text="${topRatedMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Popularity:  </span><p th:text="${topRatedMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Vote average:  </span><p th:text="${topRatedMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
+						<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Total votes  </span><p th:text="${topRatedMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
 						<!--<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span><p th:text="${topRatedMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
-						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span>
+						<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">IMDB:  </span>
 							<a th:href="@{../posaljiNaImdbKrozKontroler(nazivFilma=${topRatedMovie.title})}" th:target="_blank" th:style="'position: relative; left: 53px;'" class="btn btn-info btn-sm">IMDB</a>
 						</li>
 
@@ -185,7 +185,7 @@
 				</td>
 				<td style="width: 36% !important;" class="dodajOpacity">
 					<span>
-						<h3 th:text="${topRatedMovie.title}"  th:style="'color:grey;'" />					<!--	<h1>The Goodfather</h1>				-->
+						<h3 th:text="${topRatedMovie.title}"  th:style="'color:yellow;'" />					<!--	<h1>The Goodfather</h1>				-->
 						<p th:text="${topRatedMovie.movieOverview}" />			<!--	<p>Opis Filma</p>					-->
 					</span>
 				</td>
