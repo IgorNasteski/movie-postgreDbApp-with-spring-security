@@ -117,8 +117,6 @@
 <!--<body>-->
 <body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
 
-<!--<div class="bg-img">-->
-
 	<!--<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>-->
 	<h4 style="color: white; position: relative; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
 
@@ -139,7 +137,7 @@
 		</ul>
 	</div>
 
-	<table class="table table-borderless" style="margin:40px auto; width:76%; /*color:white;*/">
+	<table class="table table-borderless" style="margin:40px auto; width:87%; /*color:white;*/">
 		<!--	NE TREBA MI HEADER TABELE	-->
 		<!--<thead class="thead-dark">
 			<tr>
@@ -156,11 +154,11 @@
 
 		<tbody>	<!--<tbody style="background-color: papayawhip; opacity: 0.9;">-->
 			<tr th:each="topRatedMovie : ${topRatedMovieList}">
-				<td id="skloniPadding" style="width: 3% !important;" class="dodajOpacity">
+				<td id="skloniPadding" style="width: 5% !important;" class="dodajOpacity">
 					<img th:src="${topRatedMovie.moviePosterPath}" class="img-thumbnail"  th:style="'max-width: 87%; max-height: 100%; margin-bottom: 3px; padding:0px !important; border:0px !important;'"/>
 				</td>
-				<td style="width: 4% !important;" class="dodajOpacity">
-					<ul th:style="'margin-bottom: 16px !important; list-style-type:none;'">
+				<td style="width: 8% !important;" class="dodajOpacity">
+					<span th:style="'margin-bottom: 16px !important; list-style-type:none;'">
 						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Release date:  </span><p th:text="${topRatedMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
 						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Popularity:  </span><p th:text="${topRatedMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
 						<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Vote average:  </span><p th:text="${topRatedMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
@@ -183,18 +181,17 @@
 						<!--Popularity: <li th:text="${topRatedMovie.popularity}" />				<!--	<li>Popularity: 100000</li> 		-->
 						<!--Vote average: <li th:text="${topRatedMovie.movieVotesAverage}" />		<!--	<li>Vote average: 9.2</li>			-->
 						<!--Total votes: <li th:text="${topRatedMovie.numberOfPeopleVoted}" />		<!--	<li>Total votes: 4000000</li>		-->
-					</ul>
+					</span>
 				</td>
-				<td style="width: 19% !important;" class="dodajOpacity">
-					<ul>
+				<td style="width: 36% !important;" class="dodajOpacity">
+					<span>
 						<h3 th:text="${topRatedMovie.title}"  th:style="'color:grey;'" />					<!--	<h1>The Goodfather</h1>				-->
 						<p th:text="${topRatedMovie.movieOverview}" />			<!--	<p>Opis Filma</p>					-->
-					</ul>
+					</span>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-<!--</div>-->
 
 </body>
 </html>
