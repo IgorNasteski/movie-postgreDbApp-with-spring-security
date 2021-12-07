@@ -38,14 +38,20 @@
 			font-size: 30px;
 		}
 
-		html,body{
+		body{
+			width: 100%;
+			min-height: 100vh;
+			background: url("/img/background5.jpg") no-repeat center center fixed;
+		}
+
+		/*html,body{
 			height:100%;
 		}
 		.bg-img {
 			background: url(/img/background5.jpg) no-repeat center center fixed;
 			/* height: 100%; */
-			background-size: cover;
-		}
+			/*background-size: cover;
+		}*/
 
 		/*html {
 			background: url("/img/background5.jpg") no-repeat center center fixed;
@@ -80,12 +86,12 @@
 <!--<body>-->
 <body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
 
-<div class="bg-img">
+<!--<div class="bg-img">-->
 
 	<!--<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>-->
-	<h4 style="color: white; position: relative; top:9px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
+	<h4 style="color: white; position: relative; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
 
-	<div class="flex-container">
+	<div class="flex-container" th:style="'margin: -19px auto !important;'">
 		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
 			<li class="nav-item">
 				<a th:href="@{../}" class="btn btn-secondary">Top Rated</a>
@@ -157,7 +163,7 @@
 			</tr>
 		</tbody>
 	</table>
-</div>
+<!--</div>-->
 
 </body>
 </html>
