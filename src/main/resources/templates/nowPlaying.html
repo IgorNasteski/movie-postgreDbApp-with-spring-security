@@ -16,7 +16,7 @@
 		tr{border-style: hidden !important;}
 		#skloniPadding{padding: 0px !important;}
 		td{padding: 0px; !important;}
-		p{margin-bottom: unset;}
+		p{margin-bottom: unset; text-align: justify;}
 
 		li{padding: 1px;}
 		/*ul:hover {/*background-color: black;*/ /*position: relative; left:10px; bottom: 2px;}*/
@@ -37,36 +37,72 @@
 			line-height: 75px;
 			font-size: 30px;
 		}
+
+		/*prvo za standardnu pricu a ispod za razlicite ekrane uredjaja*/
+		body {
+			background: url(/img/background5.jpg) no-repeat center center fixed;
+			/*background-image: url("/img/background5.jpg");*/
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+		}
+
+		@media screen and (min-width: 768px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+
+		@media screen and (min-width: 1025px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+
+		/*NIJE RADILO*/
+		/*@media screen and (min-width: 768px) {
+			#zaTefelone{
+				width: 12% !important;
+			}
+		}
+		@media screen and (min-width: 1025px) {
+			#zaTefelone {
+				width: 12% !important;
+			}
+		}*/
 	</style>
 
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Movie DB App</title>
 </head>
-<!--<body style="background: url('/img/global-health-background5.jpg') no-repeat center center fixed">-->
-<body style="background: url('/img/background5.jpg') no-repeat center center fixed">
+<body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
 
 	<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>
 
-	<div class="flex-container">
-		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
-			<li class="nav-item">
-				<a th:href="@{../}" class="btn btn-secondary">Top Rated</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../newPopularMovies}" class="btn btn-secondary">Popular</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../upcomingMovies}" class="btn btn-secondary">Upcoming</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary">Now Playing</a>
-			</li>
-		</ul>
+	<h4 style="color: white; position: fixed; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
+
+	<div style="margin-top:20px;">
+		<div class="flex-container" style="margin:0px auto !important; width: 100%;/* text-align: center; */">
+			<div style="margin:0 auto;">
+				<a href="../" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
+				<a href="../newPopularMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Popular</a>
+				<a href="../upcomingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Upcoming</a>
+				<a href="../nowPlayingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Now Playing</a>
+			</div>
+		</div>
 	</div>
 
 		<!-- OVO JE HOME PAGE MOVIES APLIKACIJE, PO DEFAULTU CU IZBACITI SVE NAJPOPULARNIJE FILMOVE  -->
-	<table class="table table-borderless" style="margin:40px auto; width:76%; /*color:white;*/">
+	<table class="table table-borderless" style="margin:40px auto; width:92%; /*color:white;*/">
 		<!--<thead class="thead-dark">
 		<tr>
 			<th class="verticalAlign" th:style="'width: 0% !important;'">Movie ID</th>
@@ -81,17 +117,17 @@
 		</thead>-->
 		<tbody>	<!--<tbody style="background-color: papayawhip; opacity: 0.9;">-->
 		<tr th:each="nowPlayingMovie : ${nowPlayingMovies}">
-			<td id="skloniPadding" style="width: 3% !important;" class="dodajOpacity">
+			<td id="skloniPadding" style="width: 5% !important;" class="dodajOpacity">
 				<img th:src="${nowPlayingMovie.moviePosterPath}" class="img-thumbnail"  th:style="'max-width: 87%; max-height: 100%; margin-bottom: 3px; padding:0px !important; border:0px !important;'"/>
 			</td>
-			<td style="width: 4% !important;" class="dodajOpacity">
-				<ul th:style="'margin-bottom: 16px !important; list-style-type:none;'">
-					<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Release date:  </span><p th:text="${nowPlayingMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
-					<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Popularity:  </span><p th:text="${nowPlayingMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
-					<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Vote average:  </span><p th:text="${nowPlayingMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
-					<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">Total votes  </span><p th:text="${nowPlayingMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
+			<td style="width: 11% !important;" class="dodajOpacity">
+				<span th:style="'margin-bottom: 16px !important; list-style-type:none;'">
+					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Release date:  </span><p th:text="${nowPlayingMovie.releaseDate}" th:style="'position: relative; bottom: 16px; left: 100px;'" /></li>				<!--	<li>Release date: 2021-14-14</li>	-->
+					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Popularity:  </span><p th:text="${nowPlayingMovie.popularity}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>					<!--	<li>Popularity: 100000</li> 		-->
+					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Vote average:  </span><p th:text="${nowPlayingMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
+					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Total votes  </span><p th:text="${nowPlayingMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
 					<!--<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span><p th:text="${nowPlayingMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
-					<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span>
+					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">IMDB:  </span>
 						<a th:href="@{../posaljiNaImdbKrozKontroler(nazivFilma=${nowPlayingMovie.title})}" th:target="_blank" th:style="'position: relative; left: 53px;'" class="btn btn-info btn-sm">IMDB</a>
 					</li>
 					<!--<td>									<!-- otvori na novom tabu -->
@@ -102,13 +138,13 @@
 					<!--Popularity: <li th:text="${nowPlayingMovie.popularity}" />				<!--	<li>Popularity: 100000</li> 		-->
 					<!--Vote average: <li th:text="${nowPlayingMovie.movieVotesAverage}" />		<!--	<li>Vote average: 9.2</li>			-->
 					<!--Total votes: <li th:text="${nowPlayingMovie.numberOfPeopleVoted}" />		<!--	<li>Total votes: 4000000</li>		-->
-				</ul>
+				</span>
 			</td>
-			<td style="width: 19% !important;" class="dodajOpacity">
-				<ul>
-					<h3 th:text="${nowPlayingMovie.title}"  th:style="'color:grey;'" />					<!--	<h1>The Goodfather</h1>				-->
+			<td style="width: 36% !important;" class="dodajOpacity">
+				<span>
+					<h3 th:text="${nowPlayingMovie.title}"  th:style="'color:yellow;'" />					<!--	<h1>The Goodfather</h1>				-->
 					<p th:text="${nowPlayingMovie.movieOverview}" />			<!--	<p>Opis Filma</p>					-->
-				</ul>
+				</span>
 			</td>
 		</tr>
 		</tbody>

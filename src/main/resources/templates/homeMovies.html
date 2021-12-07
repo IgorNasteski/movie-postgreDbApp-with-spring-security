@@ -38,15 +38,7 @@
 			font-size: 30px;
 		}
 
-		/*body{
-			width: 100%;
-			min-height: 100vh;
-			background: url("/img/background5.jpg") no-repeat center center fixed;
-			/*background-color: currentColor;*/
-			/*background-size: auto;
-			background-attachment: fixed;
-		}*/
-
+		/*prvo za standardnu pricu a ispod za razlicite ekrane uredjaja*/
 		body {
 			background: url(/img/background5.jpg) no-repeat center center fixed;
 			/*background-image: url("/img/background5.jpg");*/
@@ -75,7 +67,8 @@
 			}
 		}
 
-		@media screen and (min-width: 768px) {
+		/*NIJE RADILO*/
+		/*@media screen and (min-width: 768px) {
 			#zaTefelone{
 				width: 12% !important;
 			}
@@ -84,40 +77,6 @@
 			#zaTefelone {
 				width: 12% !important;
 			}
-		}
-
-		/*html,body{
-			height:100%;
-		}
-		.bg-img {
-			background: url(/img/background5.jpg) no-repeat center center fixed;
-			/* height: 100%; */
-			/*background-size: cover;
-		}*/
-
-		/*html {
-			background: url("/img/background5.jpg") no-repeat center center fixed;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;
-		}*/
-
-		/*body {
-			background-image:url("/img/background5.jpg");
-			background-position: center top;
-			background-size: auto;
-		}
-
-		/*body {
-			background-image:url("/img/background5.jpg");
-			background-repeat: no-repeat;
-			/*background-size: 100% 100%;*/
-		/*	background-attachment: fixed;
-			background-size: cover;
-		}
-		html {
-			height: 100%
 		}*/
 	</style>
 
@@ -128,32 +87,16 @@
 <!--<body>-->
 <body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
 
-	<!--<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>-->
-	<h4 style="color: white; position: relative; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
+	<h4 style="color: white; position: fixed; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
 
-	<!--<div class="flex-container" th:style="'margin: -19px auto !important;'">
-		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
-			<li class="nav-item">
-				<a th:href="@{../}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Top Rated</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../newPopularMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Popular</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../upcomingMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Upcoming</a>
-			</li>
-			<li class="nav-item">
-				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Now Playing</a>
-			</li>
-		</ul>
-	</div>-->
-
-	<div class="flex-container" style="margin: -19px auto !important; width: 100%;/* text-align: center; */">
-		<div style="margin:0 auto;">
-			<a href="../" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
-			<a href="../newPopularMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Popular</a>
-			<a href="../upcomingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Upcoming</a>
-			<a href="../nowPlayingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Now Playing</a>
+	<div style="margin-top:20px;">
+		<div class="flex-container" style="margin:0px auto !important; width: 100%;/* text-align: center; */">
+			<div style="margin:0 auto;">
+				<a href="../" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
+				<a href="../newPopularMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Popular</a>
+				<a href="../upcomingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Upcoming</a>
+				<a href="../nowPlayingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Now Playing</a>
+			</div>
 		</div>
 	</div>
 
