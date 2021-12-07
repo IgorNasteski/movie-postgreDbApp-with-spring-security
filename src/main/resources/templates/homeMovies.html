@@ -16,7 +16,7 @@
 		tr{border-style: hidden !important;}
 		#skloniPadding{padding: 0px !important;}
 		td{padding: 0px; !important;}
-		p{margin-bottom: unset;}
+		p{margin-bottom: unset; text-align: justify;}
 
 		li{padding: 1px;}
 		/*ul:hover {/*background-color: black;*/ /*position: relative; left:10px; bottom: 2px;}*/
@@ -131,7 +131,7 @@
 	<!--<h4 style="color: white; position: absolute; left: 15px;">Movies <span style="color:yellow;">App</span></h4>-->
 	<h4 style="color: white; position: relative; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
 
-	<div class="flex-container" th:style="'margin: -19px auto !important;'">
+	<!--<div class="flex-container" th:style="'margin: -19px auto !important;'">
 		<ul class="nav nav-pills nav-fill" th:style="'margin:0 auto;'">
 			<li class="nav-item">
 				<a th:href="@{../}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Top Rated</a>
@@ -146,6 +146,15 @@
 				<a th:href="@{../nowPlayingMovies}" class="btn btn-secondary" th:style="'background-color:yellow;color:black;'">Now Playing</a>
 			</li>
 		</ul>
+	</div>-->
+
+	<div class="flex-container" style="margin: -19px auto !important;/* text-align: center; */">
+		<div style="margin:0 auto;">
+			<a href="../" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
+			<a href="../newPopularMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Popular</a>
+			<a href="../upcomingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Upcoming</a>
+			<a href="../nowPlayingMovies" class="btn btn-secondary" style="background-color:yellow;color:black;">Now Playing</a>
+		</div>
 	</div>
 
 	<table class="table table-borderless" style="margin:40px auto; width:92%; /*color:white;*/">
