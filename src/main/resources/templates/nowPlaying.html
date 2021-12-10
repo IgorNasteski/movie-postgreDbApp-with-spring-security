@@ -78,6 +78,16 @@
 				width: 12% !important;
 			}
 		}*/
+
+		#outer
+		{
+			width:100%;
+			text-align: center;
+		}
+		.inner
+		{
+			display: inline-block;
+		}
 	</style>
 
 <head>
@@ -148,8 +158,13 @@
 			</td>
 		</tr>
 		</tbody>
-
 	</table>
+
+	<div id="outer" th:style="'width:100%; text-align:center;'">
+		<div class="inner" th:each="brojStranice: ${brojeviStranica}">
+			<a th:href="@{../proveriBrojStraniceZaPaginacijuNowPlayingMovies(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
+		</div>
+	</div>
 
 	<!--<a th:href="@{../covid/homeCountryCovidDetails}" class="btn btn-primary" id="linkKaNazad">Check Covid Details For Another Country?</a>-->
 	<!--<a th:href="@{../}" id="linkKaHomePage">Home Page</a>-->

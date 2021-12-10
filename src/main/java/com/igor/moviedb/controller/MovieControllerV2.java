@@ -48,7 +48,7 @@ public class MovieControllerV2 {
     //koristim drugi metod @GetMapping("/"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem od 20 do 1000 filmova
     //sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
-    @GetMapping("/topRatedMoviesEver")
+    /*@GetMapping("/topRatedMoviesEver")
     public String getTopRatedMoviesEver(Model theModel){
         //url = https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1
         String urlTopRatedEver = "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1";
@@ -57,7 +57,7 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
         theModel.addAttribute("topRatedMovieList", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
         return "homeMovies";
-    }
+    }*/
 
     /*@GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getTop40RatedMoviesEverProba(Model theModel){
@@ -80,21 +80,12 @@ public class MovieControllerV2 {
 
     @GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getTopRatedMoviesEverProba(Model theModel){
-        //url = https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1
-        /*String urlTopRatedEver = "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1";
-        MovieResponse movieResponse = restTemplate.getForObject(urlTopRatedEver, MovieResponse.class);
-        //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
-        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
-        theModel.addAttribute("topRatedMovieList", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
-        return "homeMovies";*/
-
-
-        return proveriBrojStraniceZaPaginaciju(1, theModel);
+        return proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(1, theModel);
     }
 
-    @GetMapping("/proveriBrojStraniceZaPaginaciju")
-    public String proveriBrojStraniceZaPaginaciju(@RequestParam("brojStranice")int brojStranice, Model theModel){
-        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO " + brojStranice);
+    @GetMapping("/proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage")
+    public String proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(@RequestParam("brojStranice")int brojStranice, Model theModel){
+        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO TOP RATED MOVIES " + brojStranice);
         //url ka podacima   "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1"   ima 50 page-a, na svakom 20 filmova
         String urlTopRatedEver = "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=";
         MovieResponse movieResponse = restTemplate.getForObject(urlTopRatedEver+brojStranice, MovieResponse.class);
@@ -113,7 +104,7 @@ public class MovieControllerV2 {
     //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
-    @GetMapping("/newPopular20Movies")
+   /* @GetMapping("/newPopular20Movies")
     public String getNewMostPopularMovies(Model theModel){
         String url="https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
         MovieResponse movieResponse = restTemplate.getForObject(url, MovieResponse.class);
@@ -121,9 +112,9 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
         theModel.addAttribute("popularNewMovies", movieResponse.getMovieResults());
         return "newPopularMovies";
-    }
+    }*/
 
-    @GetMapping("/newPopularMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
+    /*@GetMapping("/newPopularMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getNewPopularMovies(Model theModel){
         //url do novih popularnih=  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
         String urlDoBrojaStranice="https://api.themoviedb.org/3/movie/popular?language=en-US&page=";
@@ -142,6 +133,29 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResultsList);
         theModel.addAttribute("popularNewMovies", movieResultsList);
         return "newPopularMovies";
+    }*/
+
+    @GetMapping("/newPopularMovies")
+    public String getNewMostPopularMovies(Model theModel){
+        return proveriBrojStraniceZaPaginacijuPopularMovies(1, theModel);
+    }
+
+    @GetMapping("/proveriBrojStraniceZaPaginacijuPopularMovies")
+    public String proveriBrojStraniceZaPaginacijuPopularMovies(@RequestParam("brojStranice")int brojStranice, Model theModel){
+        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO POPULAR MOVIES " + brojStranice);
+        //url za most popular   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280"
+        String urlDoPage = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=";
+        String apiKey = "&api_key=79c150f8a75bdf97173bbfac4d0ec280";
+        MovieResponse movieResponse = restTemplate.getForObject(urlDoPage + brojStranice + apiKey, MovieResponse.class);
+        //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
+        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
+        theModel.addAttribute("popularNewMovies", movieResponse.getMovieResults());
+        List<Integer> brojeviStranica = new ArrayList<>();
+        for(int i=1; i<51; i++){
+            brojeviStranica.add(i);
+        }
+        theModel.addAttribute("brojeviStranica", brojeviStranica);
+        return "newPopularMovies";  //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
     }
 
 
@@ -150,7 +164,7 @@ public class MovieControllerV2 {
     //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
-    @GetMapping("/upcoming20Movies")
+    /*@GetMapping("/upcoming20Movies")
     public String get20UpcomingMovies(Model theModel){
         //url = https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
         String url = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
@@ -159,9 +173,9 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
         theModel.addAttribute("upcomingMovies", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
         return "upcomingMovies";
-    }
+    }*/
 
-    @GetMapping("/upcomingMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
+    /*@GetMapping("/upcomingMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getUpcomingMovies(Model theModel){
         //url = https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
         String urlDoPage="https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=";
@@ -181,6 +195,29 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResultsList);
         theModel.addAttribute("upcomingMovies", movieResultsList);
         return "upcomingMovies";
+    }*/
+
+    @GetMapping("/upcomingMovies")
+    public String getUpcomingMovies(Model theModel){
+        return proveriBrojStraniceZaPaginacijuUpcomingMovies(1, theModel);
+    }
+
+    @GetMapping("/proveriBrojStraniceZaPaginacijuUpcomingMovies")
+    public String proveriBrojStraniceZaPaginacijuUpcomingMovies(@RequestParam("brojStranice")int brojStranice, Model theModel){
+        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO UPCOMING MOVIES " + brojStranice);
+        //url = https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
+        String urlDoPage = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=";
+        String apiKey = "&api_key=79c150f8a75bdf97173bbfac4d0ec280";
+        MovieResponse movieResponse = restTemplate.getForObject(urlDoPage + brojStranice + apiKey, MovieResponse.class);
+        //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
+        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
+        theModel.addAttribute("upcomingMovies", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
+        List<Integer> brojeviStranica = new ArrayList<>();
+        for(int i=1; i<51; i++){
+            brojeviStranica.add(i);
+        }
+        theModel.addAttribute("brojeviStranica", brojeviStranica);
+        return "upcomingMovies";
     }
 
 
@@ -188,7 +225,7 @@ public class MovieControllerV2 {
     //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
-    @GetMapping("/nowPlaying")
+    /*@GetMapping("/nowPlaying")
     public String getNowPlaying(Model theModel){
         //url = https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
         String url = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
@@ -196,9 +233,9 @@ public class MovieControllerV2 {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
         theModel.addAttribute("nowPlayingMovies", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
         return "nowPlaying";
-    }
+    }*/
 
-    @GetMapping("/nowPlayingMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
+    /*@GetMapping("/nowPlayingMovies")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getNowPlayingMovies(Model theModel){
         //url = https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
         String urlDoPage="https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=";
@@ -217,6 +254,28 @@ public class MovieControllerV2 {
         //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
         movieDbService.setujKonacniPathDoSlikeFilma(movieResultsList);
         theModel.addAttribute("nowPlayingMovies", movieResultsList);
+        return "nowPlaying";
+    }*/
+
+    @GetMapping("/nowPlayingMovies")
+    public String getNowPlaying(Model theModel){
+        return proveriBrojStraniceZaPaginacijuNowPlayingMovies(1, theModel);
+    }
+
+    @GetMapping("/proveriBrojStraniceZaPaginacijuNowPlayingMovies")
+    public String proveriBrojStraniceZaPaginacijuNowPlayingMovies(@RequestParam("brojStranice")int brojStranice, Model theModel){
+        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO NOW PLAYING MOVIES " + brojStranice);
+        //url = https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280
+        String urlDoPage = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=";
+        String apiKey = "&api_key=79c150f8a75bdf97173bbfac4d0ec280";
+        MovieResponse movieResponse = restTemplate.getForObject(urlDoPage+brojStranice+apiKey, MovieResponse.class);
+        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
+        theModel.addAttribute("nowPlayingMovies", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
+        List<Integer> brojeviStranica = new ArrayList<>();
+        for(int i=1; i<51; i++){
+            brojeviStranica.add(i);
+        }
+        theModel.addAttribute("brojeviStranica", brojeviStranica);
         return "nowPlaying";
     }
 

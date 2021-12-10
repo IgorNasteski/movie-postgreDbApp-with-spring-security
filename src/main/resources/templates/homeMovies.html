@@ -184,7 +184,7 @@
 
 	<div id="outer" th:style="'width:100%; text-align:center;'">
 		<div class="inner" th:each="brojStranice: ${brojeviStranica}">
-			<a th:href="@{../proveriBrojStraniceZaPaginaciju(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
+			<a th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
 		</div>
 	</div>
 
