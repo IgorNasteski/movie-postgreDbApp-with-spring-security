@@ -1,7 +1,6 @@
 package com.igor.moviedb.controller;
 
 import com.igor.moviedb.model.imdb.ImdbDrugiApiResponse;
-import com.igor.moviedb.model.imdb.ImdbResponse;
 import com.igor.moviedb.model.movie.MovieResponse;
 import com.igor.moviedb.model.movie.MovieResults;
 import com.igor.moviedb.service.MovieDbService;
@@ -26,11 +25,14 @@ import java.util.List;
 @Controller
 //@RequestMapping("/movies")
 @RequestMapping("/")
-public class MovieController {
+public class MovieControllerV2 {
+    //KORISTIM OVAJ KONTROLER, IMPLEMENTIRAO SAM PAGINACIJU NA NEKI MOJ NACIN
+
+
     //kontaktiram movie db api(npr dodam u url "popular" pa dobijem tu listu) a posle i imdb api(njemu prosledim naziv filma a dobijem id)
     //imacu TOP RATED, POPULAR, UPCOMING, NOW PLAYING   - za svaki endpoint koji se poziva koristim drugu metodu, prva je samo bila za primer/prikaz od 20 filmova
 
-    private final Logger log = LoggerFactory.getLogger(MovieController.class);
+    private final Logger log = LoggerFactory.getLogger(MovieControllerV2.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -57,7 +59,7 @@ public class MovieController {
         return "homeMovies";
     }
 
-    @GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
+    /*@GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getTop40RatedMoviesEverProba(Model theModel){
         String urlDoBrojaStranice="https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=";
         //sad dodati brojeve stranica dohvatam filmove sa page-a 1 i page-a 2 - bice dovoljno 40 filmova da prikazem, tako sam ja odlucio
@@ -74,9 +76,38 @@ public class MovieController {
         movieDbService.setujKonacniPathDoSlikeFilma(movieResultsList);
         theModel.addAttribute("topRatedMovieList", movieResultsList);
         return "homeMovies";
+    }*/
+
+    @GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
+    public String getTopRatedMoviesEverProba(Model theModel){
+        //url = https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1
+        /*String urlTopRatedEver = "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1";
+        MovieResponse movieResponse = restTemplate.getForObject(urlTopRatedEver, MovieResponse.class);
+        //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
+        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
+        theModel.addAttribute("topRatedMovieList", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
+        return "homeMovies";*/
+
+
+        return proveriBrojStraniceZaPaginaciju(1, theModel);
     }
 
-
+    @GetMapping("/proveriBrojStraniceZaPaginaciju")
+    public String proveriBrojStraniceZaPaginaciju(@RequestParam("brojStranice")int brojStranice, Model theModel){
+        System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO " + brojStranice);
+        //url ka podacima   "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=1"   ima 50 page-a, na svakom 20 filmova
+        String urlTopRatedEver = "https://api.themoviedb.org/3/movie/top_rated?api_key=79c150f8a75bdf97173bbfac4d0ec280&language=en-US&page=";
+        MovieResponse movieResponse = restTemplate.getForObject(urlTopRatedEver+brojStranice, MovieResponse.class);
+        //setujem konacnu putanju do slike filma - objasnjenje u metodi koja se nalazi u MovieDbService-u
+        movieDbService.setujKonacniPathDoSlikeFilma(movieResponse.getMovieResults());
+        theModel.addAttribute("topRatedMovieList", movieResponse.getMovieResults());     //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
+        List<Integer> brojeviStranica = new ArrayList<>();
+        for(int i=1; i<51; i++){
+            brojeviStranica.add(i);
+        }
+        theModel.addAttribute("brojeviStranica", brojeviStranica);
+        return "homeMovies";
+    }
 
                                   //*****************2)NAJNOVIJI A NAJPOPULARNIJI FILMOVI********************
     //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
