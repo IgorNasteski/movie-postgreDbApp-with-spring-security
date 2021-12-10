@@ -80,9 +80,10 @@ public class MovieControllerV2 {
 
     @GetMapping("/")                                            //OVU KORISTIM, GORNJA JE SAMO 20 FILMOVA - RADI TESTA
     public String getTopRatedMoviesEverProba(Model theModel){
-        return proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(1, theModel);
+        return proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(1, theModel);//cim pokrenem app, gadja ovaj endpoint a on kaze metodi ispod daj sve sa page-a 1(tih 20 filmova)
     }
 
+    //svaki put kada neki korisnik izabere npr stranicu broj 40(to je dugme koje ce da taj broj prosledi ovde) ja cu ovde to uhvatiti i vratiti tih 20 filmova sa te stranice
     @GetMapping("/proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage")
     public String proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(@RequestParam("brojStranice")int brojStranice, Model theModel){
         System.out.println("BROJ STRANICE NA KOJU SAM KLIKNUO TOP RATED MOVIES " + brojStranice);
