@@ -198,7 +198,7 @@
 		</ul>
 	</nav>-->
 
-	<nav aria-label="...">
+	<nav aria-label="..." th:style="'width: 82%; margin: 0 auto;'">
 		<ul class="pagination pagination-sm">
 			<span class="page-item" th:each="brojStranice: ${brojeviStranica}" th:style="'width:90; padding: 0px !important;'">
 					<a class="page-link" th:style="'padding:5px; padding: 5px; background-color: yellow; color: black; border: 1px solid black !important; text-align: center;'" th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}">2</a>
