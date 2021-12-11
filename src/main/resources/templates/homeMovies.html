@@ -183,11 +183,28 @@
 		</div>
 	</div>-->
 
-	<div id="outer" th:style="'width:100%; text-align:center;'">
+																			<!-- DIZAJN PAGINACIJE, PRVO BIO OVAJ ISPOD ALI PREVELIKA DUGMAD, PA IPAK OVAJ POSLEDNJI -->
+	<!--<div id="outer" th:style="'width:100%; text-align:center;'">
 		<div class="inner" th:each="brojStranice: ${brojeviStranica}">
 			<a th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}" class="btn btn-secondary" style="background-color:yellow;color:black;">Top Rated</a>
 		</div>
 	</div>
+
+	<nav aria-label="...">
+		<ul class="pagination pagination-sm">
+			<span class="page-item" th:each="brojStranice: ${brojeviStranica}" th:style="'width:90; padding: 0px !important;'">
+				<a class="page-link" th:style="'padding:5px;'" th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}">2</a>
+			</span>
+		</ul>
+	</nav>-->
+
+	<nav aria-label="...">
+		<ul class="pagination pagination-sm">
+			<span class="page-item" th:each="brojStranice: ${brojeviStranica}" th:style="'width:90; padding: 0px !important;'">
+					<a class="page-link" th:style="'padding:5px; padding: 5px; background-color: yellow; color: black; border: 1px solid black !important; text-align: center;'" th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}">2</a>
+				</span>
+		</ul>
+	</nav>
 
 </body>
 </html>
