@@ -184,7 +184,7 @@
 	</div>-->
 
 																			<!-- DIZAJN PAGINACIJE, PRVO BIO OVAJ ISPOD ALI PREVELIKA DUGMAD, PA IPAK OVAJ POSLEDNJI -->
-	<div id="outer" th:style="'width:100%; text-align:center; display: contents;'">
+	<div id="outer" th:style="'width:100%; text-align:center;'">
 		<div class="inner" th:each="brojStranice: ${brojeviStranica}">
 			<a th:href="@{../proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStranice=${brojStranice})}" th:value="${brojStranice}" th:text="${brojStranice}" class="btn btn-secondary" th:style="'background-color:yellow;color:black; text-align: center;'">Top Rated</a>
 		</div>
