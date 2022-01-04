@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- My CSS -->
+	<link rel="stylesheet" href="../css/style.css">
+	<style>
+		#msg1, #msg2{max-width: max-content !important; margin: 10px auto; !important;}
+		/*.verticalAlign{vertical-align: middle !important;}*/
+		th,td{vertical-align: middle !important;}
+		#linkKaNazad{margin: auto !important; display: block; margin-top: 6px; background-color: black; opacity: 0.6;}
+		#linkKaHomePage{margin: auto; display: block; width: fit-content; margin-top: 0px; font-size: 20px; color: white;}
+		tbody{line-height: 1 !important; /*opacity: 0.7 !important; background-color: white !important;*/ color: white;}
+		td{text-align: left !important;}
+		tr{border-style: hidden !important;}
+		#skloniPadding{padding: 0px !important;}
+		td{padding: 0px; !important;}
+		p{margin-bottom: unset; text-align: justify;}
+
+		li{padding: 1px;}
+		/*ul:hover {/*background-color: black;*/ /*position: relative; left:10px; bottom: 2px;}*/
+		/*table tbody tr .dodajOpacity{opacity: 88% !important;}*/
+
+		.flex-container {
+			display: flex;
+			flex-wrap: nowrap;
+			width: 31%;
+			margin: 19px auto !important;
+		}
+
+		.flex-container .centrirajFlex {
+			background-color: #f1f1f1;
+			width: 100px;
+			margin: 0px auto;
+			text-align: center;
+			line-height: 75px;
+			font-size: 30px;
+		}
+
+		/*prvo za standardnu pricu a ispod za razlicite ekrane uredjaja*/
+		body {
+			background: url(/img/background5.jpg) no-repeat center center fixed;
+			/*background-image: url("/img/background5.jpg");*/
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+		}
+
+		@media screen and (min-width: 768px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+
+		@media screen and (min-width: 1025px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+
+		/*NIJE RADILO*/
+		/*@media screen and (min-width: 768px) {
+			#zaTefelone{
+				width: 12% !important;
+			}
+		}
+		@media screen and (min-width: 1025px) {
+			#zaTefelone {
+				width: 12% !important;
+			}
+		}*/
+	</style>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+<!--<body>-->
+	<body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
+
+	<h1>ADMIN ONLY</h1>
+
+	<div class="alert alert-info text-center" th:if="${message1}" th:text="${message1}"></div>
+
+	<form action="#" th:action="@{/admin/saveNewRole}"
+		  th:object="${user}" method="POST">
+
+		<!-- need to associate this data with customer id
+        NE BI RADILO DA NISAM SAKRIO VREDNOST id-ja DA BIH GA POSLE DOHVATIO U KONTROLERU
+        INACE MI JE U KONTROLERU ZA UPDATE VRACAO 0 BEZ OVE ZASTEKANE VREDNOSTI id-ja
+        STO ZNACI DA AKO JE 0 ON NECE UPDATEOVATI NEGO SACUVATI NOVOG U BAZI -->
+		<input type="hidden" th:field="*{userId}" />	<!-- posto nemam pk kao int id, nego username String, ovo mi vrv ne treba, posto vec mogu da dohvatim valjda -->
+
+		<!-- posto hocu da namestim polje username kao read only:
+							String readOnly = "readOnly";
+        					theModel.addAttribute("makeUsernameReadOnly", readOnly);
+         OVDE SAMO PITAM DA LI JE TO POLJE readOnly == 'readOnly' A BICE TAKO JER SAM GA TAO SETOVAO U KONTROLERU KOJI ME OVDE SALJE, I BICE READONLY DUGME-->
+		<input type="text" th:field="*{username}" class="form-control mb-4 col-4" placeholder="username" th:readonly="${makeUsernameReadOnly=='readOnly'}">
+
+		<p th:style="'color:white;'">For Admin type "ROLE_ADMIN", for user role is "USER_ROLE"</p>
+		<input type="text" th:field="*{authority}" class="form-control mb-4 col-4" placeholder="authority">
+
+		<button type="submit" class="btn btn-info col-2">Save</button>
+
+	</form>
+
+	<hr>
+	<a th:href="@{/admin/homeAdmin}" class="btn btn-primary">Back to Admin Home Page</a>
+	<a th:href="@{/}" class="btn btn-primary">Back to Home Page</a>
+
+</body>
+</html>

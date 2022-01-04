@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<style>
+		/*prvo za standardnu pricu a ispod za razlicite ekrane uredjaja*/
+		body {
+			background: url(/img/background5.jpg) no-repeat center center fixed;
+			/*background-image: url("/img/background5.jpg");*/
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+		}
+
+		@media screen and (min-width: 768px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+
+		@media screen and (min-width: 1025px) {
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+		}
+	</style>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2 class="lead">ONLY USER PAGE HERE</h2>
+	
+	<hr>
+
+	<a th:href="@{/}">Back to Home Page</a>
+
+</body>
+</html>

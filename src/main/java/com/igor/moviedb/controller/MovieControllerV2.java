@@ -3,6 +3,11 @@ package com.igor.moviedb.controller;
 import com.igor.moviedb.model.imdb.ImdbDrugiApiResponse;
 import com.igor.moviedb.model.movie.MovieResponse;
 import com.igor.moviedb.model.movie.MovieResults;
+import com.igor.moviedb.model.movie.favourites.UserFavouriteMovie;
+import com.igor.moviedb.model.user.Authorities;
+import com.igor.moviedb.model.user.Users;
+import com.igor.moviedb.repository.UserFavouriteMovieRepository;
+import com.igor.moviedb.repository.UserRepository;
 import com.igor.moviedb.service.MovieDbService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +16,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,12 +44,22 @@ public class MovieControllerV2 {
     @Autowired
     private MovieDbService movieDbService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserFavouriteMovieRepository userFavouriteMovieRepository;
+
+    //bice deljena vrednost, setovacu je svaki put kad bude user menjao stranicu, da bih mogao u drugoj metodi kontrolera kada dodajem u favourites da redirektujem
+    //bas na tu istru stranicu/da ostavim usera na istoj stranici
+    private static int brojStraniceNaKojuJeUserKliknuo;
+
     private final String pathSlike = "http://image.tmdb.org/t/p/w500";
 
     private String url="https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
 
                                     //*********************1)TOP RATED FILMOVI IKAD - BICE DEFAULTNO POSTAVLJENI NA HOME STRANICI****************
-    //koristim drugi metod @GetMapping("/"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem od 20 do 1000 filmova
+    //koristim drugi metod @GetMapping("/"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem od 20 do 1000 filmova
     //sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     /*@GetMapping("/topRatedMoviesEver")
@@ -97,12 +111,15 @@ public class MovieControllerV2 {
         for(int i=1; i<51; i++){
             brojeviStranica.add(i);
         }
+        int brojTrenutneStranice = brojStranice;
         theModel.addAttribute("brojeviStranica", brojeviStranica);
+        brojStraniceNaKojuJeUserKliknuo=brojStranice;//dodao da mogu da kada user klikne add to favourites - da prosledim i broj stranice pa da
+                                                     //ga redirektujem na bas tu stranicu iz metode gde odradjujem add to favourties a zove se /dodajFilmUFavourites
         return "homeMovies";
     }
 
                                   //*****************2)NAJNOVIJI A NAJPOPULARNIJI FILMOVI********************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
    /* @GetMapping("/newPopular20Movies")
@@ -156,13 +173,15 @@ public class MovieControllerV2 {
             brojeviStranica.add(i);
         }
         theModel.addAttribute("brojeviStranica", brojeviStranica);
+        brojStraniceNaKojuJeUserKliknuo=brojStranice;//dodao da mogu da kada user klikne add to favourites - da prosledim i broj stranice pa da
+        //ga redirektujem na bas tu stranicu iz metode gde odradjujem add to favourties a zove se /dodajFilmUFavourites
         return "newPopularMovies";  //vraca 20 filmova(jer jedan MovieResponse objekat ce uzeti 20 filmova iz page=1)
     }
 
 
 
                                     //**********************3)UPCOMING MOVIES***********************************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     /*@GetMapping("/upcoming20Movies")
@@ -218,12 +237,14 @@ public class MovieControllerV2 {
             brojeviStranica.add(i);
         }
         theModel.addAttribute("brojeviStranica", brojeviStranica);
+        brojStraniceNaKojuJeUserKliknuo=brojStranice;//dodao da mogu da kada user klikne add to favourites - da prosledim i broj stranice pa da
+        //ga redirektujem na bas tu stranicu iz metode gde odradjujem add to favourties a zove se /dodajFilmUFavourites
         return "upcomingMovies";
     }
 
 
                                    //**********************3)now playing***********************************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     /*@GetMapping("/nowPlaying")
@@ -277,6 +298,8 @@ public class MovieControllerV2 {
             brojeviStranica.add(i);
         }
         theModel.addAttribute("brojeviStranica", brojeviStranica);
+        brojStraniceNaKojuJeUserKliknuo=brojStranice;//dodao da mogu da kada user klikne add to favourites - da prosledim i broj stranice pa da
+        //ga redirektujem na bas tu stranicu iz metode gde odradjujem add to favourties a zove se /dodajFilmUFavourites
         return "nowPlaying";
     }
 
@@ -300,7 +323,7 @@ public class MovieControllerV2 {
                 "imdb_id": "tt0086250",
                     "title": "Scarface"
             }
-    ]
+            ]
         }*/
 
         String urlKaImdb = "https://data-imdb1.p.rapidapi.com/movie/imdb_id/byTitle/" + nazivFilma + "/";
@@ -359,16 +382,10 @@ public class MovieControllerV2 {
 
 
 
-
-
-
-
-
-
                                //****************************PRIMER SA MOG NEKOG REST APP-A, OVAKO SAM DOHVATAO FILMOVE*********************************
                                                         //2)NAJNOVIJI A NAJPOPULARNIJI FILMOVI  -   sa rest-a primer kako ih uzimam
     //vraca 20 najnovihih i najpopularnijih filmova
-    @GetMapping("/mostRecentAndPopularMovieList")
+    /*@GetMapping("/mostRecentAndPopularMovieList")
     public List<MovieResults> getMostPopularMovies(){
         MovieResponse movieResponse = restTemplate.getForObject(url, MovieResponse.class);
         return movieResponse.getMovieResults();
@@ -389,9 +406,102 @@ public class MovieControllerV2 {
             movieResponseList.add(movieResponse);
         }
         return movieResponseList;
+    }*/
+
+
+                                    //*************DEO ZA FAVOURITES MOVIES**************
+    //http://localhost:8088/dodajFilmUFavourites?nazivFilma=Dilwale%20Dulhania%20Le%20Jayenge   kada kliknem na fovourites
+    @PostMapping("/dodajFilmUFavourites")   //spakovao sam ove vrednosti u thymeleaf-u da bih detalje uneo u bazu za tog usera
+    public String addToFavourites(@RequestParam("title") String title, @RequestParam("moviePosterPath") String moviePosterPath, @RequestParam("releaseDate") String releaseDate, @RequestParam("popularity") int popularity, @RequestParam("movieVotesAverage") double movieVotesAverage, @RequestParam("numberOfPeopleVoted") int numberOfPeopleVoted, @RequestParam("vrstaFilmova") String vrstaFilmova, Authentication authentication, Model theModel, RedirectAttributes ra){
+        System.out.println("MOVIE OBJEKAT IZ THYMELEAF-A , TITLE " + title + "     MOVIE POSTER PATH " + moviePosterPath);
+        System.out.println("BROJ TRENUTNE STRANICE NA KOJU JE USER KLIKNUO " + brojStraniceNaKojuJeUserKliknuo);
+        System.out.println("DA LI JE HOME MOVIES " + vrstaFilmova);
+
+        //ako vec imam taj film u favourites-ima, ne dodaj ga
+        Users userFromDb = userRepository.findByUsername(authentication.getName());
+        UserFavouriteMovie daLiPostojiUBaziUserFavouriteMovie = userFavouriteMovieRepository.findByTitleContainingAndUsers(title, userFromDb);
+        if(daLiPostojiUBaziUserFavouriteMovie != null){
+            ra.addFlashAttribute("message100", "Movie is already on the list!");
+        }else {
+            String username = authentication.getName();
+            System.out.println("USER USERNAME UZET PREKO AUTHENTICATION KLASE         " + username);
+            Users user = userRepository.findByUsername(username);
+            int userId = user.getUserId();
+            System.out.println("USER ID " + userId);
+            UserFavouriteMovie userFavouriteMovie = new UserFavouriteMovie();
+            userFavouriteMovie.setUsers(user);
+            userFavouriteMovie.setTitle(title);
+            userFavouriteMovie.setMoviePosterPath(moviePosterPath);
+            userFavouriteMovie.setReleaseDate(releaseDate);
+            userFavouriteMovie.setPopularity(popularity);
+            userFavouriteMovie.setMovieVotesAverage(movieVotesAverage);
+            userFavouriteMovie.setNumberOfPeopleVoted(numberOfPeopleVoted);
+            String imdbMovieId = movieDbService.imdbPutanjaPomocuNazivaFilma(title);
+            userFavouriteMovie.setMovieImdbId(imdbMovieId);
+            userFavouriteMovieRepository.save(userFavouriteMovie);
+        }
+
+        if(vrstaFilmova.equalsIgnoreCase("homeMovies"))
+            return proveriBrojStraniceZaPaginacijuTopRatedMoviesHomePage(brojStraniceNaKojuJeUserKliknuo, theModel);//redirektuje(ostavlja)me na stranici na kojoj sam film dodao u favourites
+        else if(vrstaFilmova.equalsIgnoreCase("newPopularMovies"))
+            return proveriBrojStraniceZaPaginacijuPopularMovies(brojStraniceNaKojuJeUserKliknuo, theModel);//redirektuje(ostavlja)me na stranici na kojoj sam film dodao u favourites
+        else if(vrstaFilmova.equalsIgnoreCase("upcomingMovies"))
+            return proveriBrojStraniceZaPaginacijuUpcomingMovies(brojStraniceNaKojuJeUserKliknuo, theModel);//redirektuje(ostavlja)me na stranici na kojoj sam film dodao u favourites
+        //else if(vrstaFilmova.equalsIgnoreCase("nowPlayingMovies"))
+        else
+            return proveriBrojStraniceZaPaginacijuNowPlayingMovies(brojStraniceNaKojuJeUserKliknuo, theModel);//redirektuje(ostavlja)me na stranici na kojoj sam film dodao u favourites
+        //return "redirect:/";
+        //SAMO SAM POSLAO NAZIV FILMA, MOZDA DA DIREKTNO KONTAKTIRAM MOVIE DB API PA DA POMOCU NAZIVA FILMA POKUPIM I OSTALE PODATKE VEZANE ZA FILM,
+        //PA DA SACUVAM U BAZI A ONDA DA SMESTIM TOM USERU OVE PODATKE
+        //return "";
     }
 
+    @GetMapping("/showMyProfile")
+    public String showMyProfile(Authentication authentication, Model theModel, RedirectAttributes ra){
+        //ne moram ovo da hendlujem jer se nece desiti da neko ko nije ulogovan moze da dodje na putanju za svoje favourites filmove, a sve i da proba da rucno
+        //ukuca ovaj endpoint izbacice mu error page
+        /*if(authentication.getName() == "" || authentication.getName() == null){    //ako neko nasilno proba da udje na putanju ovu da vidi svoje filmove a nije ulogovan, bacice error jer nema username-a za njega u bazi
+            //ra.addFlashAttribute("message100", "Movie is already on the list!");              //pa cu samo da ga redirektujem na home page
+            return "redirect:/";
+        }*/
+        Users user = userRepository.findByUsername(authentication.getName());
+        //List<UserFavouriteMovie> userFavouriteMovieList = userFavouriteMovieRepository.findByUsers(user.getUserId());
+        List<UserFavouriteMovie> userFavouriteMovieList = userFavouriteMovieRepository.findByUsers(user);
+        theModel.addAttribute("userFavouriteMovies", userFavouriteMovieList);
+        return "userProfile";//userProfile
+    }
 
+    @GetMapping("/searchMovie")                //dodao zbog search-a
+    public String searchMovie(@RequestParam("searchedMovieName")String searchedMovieName, /*BindingResult bindingResult, */RedirectAttributes ra, Model theModel, Authentication authentication){
+        System.out.println("USAO U MOVIES SEARCH MOVIE, MOVIE NAME " + searchedMovieName);
 
+        if(searchedMovieName == "" || searchedMovieName == null){
+            ra.addFlashAttribute("message1", "Movie name cannot be empty!");
+            return "redirect:/showMyProfile";
+        }
+
+        Users user = userRepository.findByUsername(authentication.getName());
+        UserFavouriteMovie userFavouriteMovie = userFavouriteMovieRepository.findByTitleContainingAndUsers(searchedMovieName, user);
+        //ako nema tog filma koji sam trazio vratice null i pucace
+        if(userFavouriteMovie == null){
+            ra.addFlashAttribute("message10", "Movie is not in list!");
+            return "redirect:/showMyProfile";
+        }
+
+        List<UserFavouriteMovie> userFavouriteMovieList = new ArrayList<>();
+        userFavouriteMovieList.add(userFavouriteMovie);
+
+        theModel.addAttribute("userFavouriteMovies", userFavouriteMovieList);
+        return "userProfile";
+    }
+
+    @GetMapping("/removeMovieFromFavourites")
+    public String removeMovieFromFavourites(@RequestParam("nazivFilma")String nazivFilma, Authentication authentication){
+        Users user = userRepository.findByUsername(authentication.getName());
+        UserFavouriteMovie userFavouriteMovie = userFavouriteMovieRepository.findByTitleContainingAndUsers(nazivFilma, user);
+        userFavouriteMovieRepository.delete(userFavouriteMovie);
+        //userFavouriteMovieRepository.deleteByTitle(nazivFilma);
+        return "redirect:/showMyProfile";
+    }
 
 }

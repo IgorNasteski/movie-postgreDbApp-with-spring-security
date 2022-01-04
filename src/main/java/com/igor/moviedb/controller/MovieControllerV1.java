@@ -43,7 +43,7 @@ public class MovieControllerV1 {
     private String url="https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=79c150f8a75bdf97173bbfac4d0ec280";
 
                                     //*********************1)TOP RATED FILMOVI IKAD - BICE DEFAULTNO POSTAVLJENI NA HOME STRANICI****************
-    //koristim drugi metod @GetMapping("/"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem od 20 do 1000 filmova
+    //koristim drugi metod @GetMapping("/"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem od 20 do 1000 filmova
     //sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     @GetMapping("/topRatedMoviesEver")
@@ -79,7 +79,7 @@ public class MovieControllerV1 {
 
 
                                   //*****************2)NAJNOVIJI A NAJPOPULARNIJI FILMOVI********************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     @GetMapping("/newPopular20Movies")
@@ -116,7 +116,7 @@ public class MovieControllerV1 {
 
 
                                     //**********************3)UPCOMING MOVIES***********************************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     @GetMapping("/upcoming20Movies")
@@ -154,7 +154,7 @@ public class MovieControllerV1 {
 
 
                                    //**********************3)now playing***********************************
-    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo proba gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
+    //koristim drugi metod @GetMapping("/newPopularMovies"), ovaj prvi je samo img gde ispisujem listu od 20 filmova, a na drugom sam namestio da mogu da prikazem
     //od 20 do 1000 filmova - sve zavisi koliko setujem iterator u for-u(jer svaka stranica ima 20 filmova u sebi... page=1 ima 20 filmova itd a ima 50 stranica)
 
     @GetMapping("/nowPlaying")

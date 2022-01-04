@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  
+  <!-- UBACUJEM FRAGMENT ZA HEAD OZ template.html, RADI VEZBE, JER SVAKI TAG MOZEMO UBACITI KAO FRAGMENT -->
+  <head>	<!--  th:replace="template :: header" -->
+  
+  			<link rel="stylesheet"
+		 href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		
+		<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  
+	    <title>Login page</title>
+  
+  		<style>
+  			/*body{background:url(img/background5.jpg) no-repeat center center fixed; transition: background 2s ease; transition-delay: 2s;  }*/
+			.invalid-feedback{font-size: 14px; font-weight: 600; text-align: center; color:red;}
+
+			/*prvo za standardnu pricu a ispod za razlicite ekrane uredjaja*/
+			body {
+				background: url(/img/background5.jpg) no-repeat center center fixed;
+				/*background-image: url("/img/background5.jpg");*/
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: cover;
+			}
+
+			@media screen and (min-width: 768px) {
+				body {
+					background: url(/img/background5.jpg) no-repeat center center fixed;
+					/*background-image: url("/img/background5.jpg");*/
+					background-repeat: no-repeat;
+					background-position: center center;
+					background-size: cover;
+				}
+			}
+
+			@media screen and (min-width: 1025px) {
+				body {
+					background: url(/img/background5.jpg) no-repeat center center fixed;
+					/*background-image: url("/img/background5.jpg");*/
+					background-repeat: no-repeat;
+					background-position: center center;
+					background-size: cover;
+				}
+			}
+  		</style>
+  
+  	    <!--<script type = "text/javascript">
+  	    
+		  	  var list = [
+		  			"img/background1.jpg",	//dodati zarez i jos slika ispod ako je potrebno					
+				    "img/background2.jpg",	//ako se doda jos slika, promeniti uslov if-a... krug<3 ili
+				    "img/background.jpg"
+		  	  ];
+		
+		  	   var index = 0;
+		
+		  	function changeLights() {
+		  	    //if (index == list.length) index = 0;
+		  	    if(index == list.length){
+		  	    	index = 0;
+		  	    }
+		  	    document.body.style.backgroundImage = "url('" + list[index] + "')";
+		  	    index++;
+		  	}
+		  	setInterval(function(){changeLights()}, 5000);
+        </script>-->
+  </head>
+
+  <body>
+    <div style="position: relative; margin: 40px auto; width: 24%;">
+    	<!-- <div id="loginbox" style="margin-top: 50px;" class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2"> -->
+  
+  			<div class="panel panel-info">
+  			
+  				<div class="panel-heading">
+					<div class="panel-title">Sign Up</div>
+				</div>
+  			
+  				<div style="padding-top: 30px" class="panel-body">
+  			
+  			
+				    <form th:action="@{/users/processNewSignUpUser}" th:object="${users}" method="post" class="form-horizontal">
+				    	
+						<!-- need to associate this data with customer id 
+						NE BI RADILO DA NISAM SAKRIO VREDNOST id-ja DA BIH GA POSLE DOHVATIO U KONTROLERU
+						INACE MI JE U KONTROLERU ZA UPDATE VRACAO 0 BEZ OVE ZASTEKANE VREDNOSTI id-ja
+						STO ZNACI DA AKO JE 0 ON NECE UPDATEOVATI NEGO SACUVATI NOVOG U BAZI -->
+						<!--<input type="hidden" th:field="*{username}" />	-->
+
+						<div class="alert alert-info text-center" th:if="${message2}" th:text="${message2}"></div>
+						<div class="alert alert-info text-center" th:if="${message3}" th:text="${message3}"></div>
+						<div class="alert alert-info text-center" th:if="${message4}" th:text="${message4}"></div>
+						<div class="alert alert-info text-center" th:if="${message5}" th:text="${message5}"></div>
+						<div class="alert alert-info text-center" th:if="${message6}" th:text="${message6}"></div>
+
+						<!-- * oznacava property objekta koji smo definisali u form tagu "users"-njega smo upakovali u model u kontroleru kada smo slali na ovu stranicu -->
+						<!-- Username -->
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input type="text" th:field="*{username}" th:value="username" class="form-control mb-4 col-4" placeholder="username">
+							<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
+						</div>
+
+						<!-- Password -->
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input type="text" th:field="*{password}" class="form-control mb-4 col-4" placeholder="password">
+							<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+						</div>
+
+						<!-- Email -->
+						<!--<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+							<input type="text" th:field="*{email}" class="form-control mb-4 col-4" placeholder="email">
+							<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+						</div>
+
+						<!-- First Name -->
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="first name">
+							<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
+						</div>
+
+						<!-- Last Name -->
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="last name">
+							<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
+						</div>
+
+						<button type="submit" class="btn btn-info col-2">Sign Up</button>
+				      	    
+				    </form>
+
+					<br>
+					
+					<a th:href="@{/users/showMyLoginPage}" class="btn btn-primary">Back to Login</a>
+					<a th:href="@{/}" class="btn btn-primary">HOME</a>
+			    
+			    
+			    
+			    </div>
+			    
+			</div>
+		
+		<!-- </div> -->
+		
+		
+	</div>
+	
+	<!--<div th:replace="template :: footer"></div>-->
+    
+  </body>
+</html>

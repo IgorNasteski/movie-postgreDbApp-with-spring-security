@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-	<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../css/style.css">
+	<!-- Font Awesome(ubacen zbog profil ikonice) -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	<style>
 		/*.verticalAlign{vertical-align: middle !important;}*/
 		th,td{vertical-align: middle !important;}
@@ -96,8 +102,49 @@
 </head>
 <body><!-- style="background: url('/img/background5.jpg') no-repeat center center fixed">-->
 
-	<h4 style="color: white; position: fixed; top:20px; margin-left: 20px;">Movies <span style="color:yellow;">App</span></h4>
-	<p style="color: white; position: fixed; top:20px; right:20px;">© Copyright <span style="color:yellow;">Igor Nasteski</span></p>
+	<h4 th:style="'color: white; position: fixed; top:20px; right: 20px;'">Movies <span style="color:yellow;">App</span></h4>
+	<p th:style="'color: white; position: fixed; top:45px; right:20px;'">©Copyright <span th:style="'color:yellow;'">Igor Nasteski</span></p>
+
+	<!-- zbog sec:authorize="!isAuthenticated()" ovo ce se prikazivati samo onima koji se nisu registrovali pa onda ulogovali -->
+	<blockquote class="blockquote text-center" th:style="'color:white; margin-top: 21px; color:yellow;'" sec:authorize="!isAuthenticated()">
+		<p class="mb-0" th:style="'text-align: center !important;'">
+			<a href="../users/showMyLoginPage" class="btn btn-secondary" th:style="'background-color:blue;color:yellow;width:4%;height:4%;line-height:85%;'">Login</a>
+			or
+			<a href="../users/signUp" class="btn btn-secondary" th:style="'background-color:green;color:yellow;width:5%;height:4%;line-height:85%;'">Register</a>
+			so you can add movies to your favourites list.
+			<!--If you register and login to our page, you can add movies to favourites, and contact us via email.-->
+		</p>
+		<!--<footer class="blockquote-footer" th:style="'color:white;'">"If you think you are too small to make a difference, try sleeping with a mosquito."<cite title="Source Title">    -I.N. 2021</cite></footer>-->
+		<footer class="blockquote-footer" th:style="'color:white;'">"If you think you are too small to make a difference, try sleeping with a mosquito."</footer>
+	</blockquote><!--"People say nothing is impossible, but i do nothing every day"-->
+
+	<div class="container" th:style="'color:yellow;'">
+		<div class="row" sec:authorize="isAuthenticated()">
+			<!-- STAVICU DROPDOWN LISTU, KADA KLIKNEM NA NJU DA MI IZBACI OPCIJU DA VIDIM FAVOURITES FILMOVE I LOGOUT -->
+			<div class="dropdown" th:style="'position: fixed; left: 20px; top: 20px;'">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="fa fa-user-o" aria-hidden="true"> Profile</span>
+				</button>
+				<div class="dropdown-menu">
+					<!--prvi link drop down-a-->
+					<a class="dropdown-item" href="../showMyProfile"><span class="fa fa-star" aria-hidden="true" th:style="'color: blue;'">  Movies</span></a>
+					<!--drugi link drop down-a VIDECU SAMO JA ADMIN-->
+					<div sec:authorize="hasRole('ADMIN')">
+						<a class="dropdown-item" href="/admin/homeAdmin"><span class="fa fa-home" aria-hidden="true" th:style="'color: blue;'"> Admin Home</span></a>
+						<a class="dropdown-item" href="/admin/sendToCrudUsersPage"><span class="fa fa-user" aria-hidden="true" th:style="'color: blue;'"> Crud Users</span></a>
+					</div>
+					<!--treci link drop down-a-->
+					<div class="dropdown-item">
+						<form th:action="@{/logout}" method="post"><!--th:style="'position: absolute; top: 25px; right: 9px; width: 6%; height: 3%;'"-->
+							<span class="fa fa-sign-out" th:style="'color: red;'">
+								<input type="submit" value="Logout" th:style="'border: none; background: none; color: red;'"/><!-- class="btn btn-info"--><!--th:style="'width: 79%; height: 155%; line-height: 50%; background-color:red !important;'"-->
+							</span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div style="margin-top:20px;">
 		<div class="flex-container" style="margin:0px auto !important; width: 100%;/* text-align: center; */">
@@ -136,8 +183,23 @@
 					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Vote average:  </span><p th:text="${nowPlayingMovie.movieVotesAverage}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Vote average: 9.2</li>			-->
 					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">Total votes  </span><p th:text="${nowPlayingMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
 					<!--<li th:style="'height:18px !important;'"><span th:style="'color:grey;'">IMDB:  </span><p th:text="${nowPlayingMovie.numberOfPeopleVoted}" th:style="'position: relative; bottom: 16px; left: 100px;'"/></li>		<!--	<li>Total votes: 4000000</li>		-->
-					<li th:style="'height:18px !important;'"><span th:style="'color:yellow;'">IMDB:  </span>
-						<a th:href="@{../posaljiNaImdbKrozKontroler(nazivFilma=${nowPlayingMovie.title})}" th:target="_blank" th:style="'position: relative; left: 53px;'" class="btn btn-info btn-sm">IMDB</a>
+					<li th:style="'height:18px !important;'">
+						<!--<span th:style="'color:yellow;'">IMDB:  </span>-->
+						<a th:href="@{../posaljiNaImdbKrozKontroler(nazivFilma=${nowPlayingMovie.title})}" th:target="_blank" th:style="'position: relative; top: 0px;'" class="btn btn-info btn-sm">IMDB</a>
+					</li>
+					<li sec:authorize="isAuthenticated()" th:style="'height:18px !important;'"><!-- PRIKAZI SAMO AKO JE KORISNIK ULOGOVAN -->
+						<form th:action="@{../dodajFilmUFavourites/}" th:object="${nowPlayingMovie}" th:method="post">
+							<input type="hidden" th:name="title" th:value="*{title}">
+							<input type="hidden" th:name="moviePosterPath" th:value="*{moviePosterPath}">
+							<input type="hidden" th:name="releaseDate" th:value="*{releaseDate}">
+							<input type="hidden" th:name="popularity" th:value="*{popularity}">
+							<input type="hidden" th:name="movieVotesAverage" th:value="*{movieVotesAverage}">
+							<input type="hidden" th:name="numberOfPeopleVoted" th:value="*{numberOfPeopleVoted}">
+							<input type="hidden" th:name="vrstaFilmova" th:value="*{'nowPlayingMovies'}"><!--na svakom thymeleaf-u za filmove(top rated, upcoming...) cu staviti kao
+														name nesto zajednicko, a kao value svojstveno bas svakom od njih, pa cu u kontroleru ispitati koja je vrsta u pitanju(thymeleaf)
+														pa u odnosu na to da redirektujem da vrati stranicu sa paginacijom-->
+							<button type="submit" class="btn btn-success btn-sm" th:style="'position: relative; top: 17px; background-color: yellow !important; color: black !important;'">Add To Favourites</button>
+						</form>
 					</li>
 					<!--<td>									<!-- otvori na novom tabu -->
 					<!--<a th:href="${article.urlOfArticle}" th:target="_blank">link</a>	<!-- th:text="${article.urlOfArticle}" -->

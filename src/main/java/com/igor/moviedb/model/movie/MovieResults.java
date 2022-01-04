@@ -2,6 +2,8 @@ package com.igor.moviedb.model.movie;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Generated;
 
@@ -28,77 +30,67 @@ public class MovieResults {
 
     //nevezano za rest poziv ka movie api-ju, napravio cisto da smestim link od imdb-a jer na thymeleaf stranici vec prolazim kroz petlju
     private String imdbLink;
+    //nevezano ra rest poziv ka movie api-ju, napravio cisto da smestim broj stranice na kojoj sam(imao sam problem kad kliknem na add favourites, da ne znam na kojoj sam)
+    private int brojTrenutneStranice;
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getMovieOverview() {
         return movieOverview;
     }
-
     public void setMovieOverview(String movieOverview) {
         this.movieOverview = movieOverview;
     }
-
     public int getPopularity() {
         return popularity;
     }
-
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
-
     public String getMoviePosterPath() {
         return moviePosterPath;
     }
-
     public void setMoviePosterPath(String moviePosterPath) {
         this.moviePosterPath = moviePosterPath;
     }
-
     public String getReleaseDate() {
         return releaseDate;
     }
-
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public double getMovieVotesAverage() {
         return movieVotesAverage;
     }
-
     public void setMovieVotesAverage(double movieVotesAverage) {
         this.movieVotesAverage = movieVotesAverage;
     }
-
     public int getNumberOfPeopleVoted() {
         return numberOfPeopleVoted;
     }
-
     public void setNumberOfPeopleVoted(int numberOfPeopleVoted) {
         this.numberOfPeopleVoted = numberOfPeopleVoted;
     }
-
     public String getImdbLink() {
         return imdbLink;
     }
-
     public void setImdbLink(String imdbLink) {
         this.imdbLink = imdbLink;
     }
-
+    public int getBrojTrenutneStranice() {
+        return brojTrenutneStranice;
+    }
+    public void setBrojTrenutneStranice(int brojTrenutneStranice) {
+        this.brojTrenutneStranice = brojTrenutneStranice;
+    }
 }
