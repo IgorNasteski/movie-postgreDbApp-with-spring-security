@@ -52,6 +52,8 @@
 			background-position: center center;
 			background-size: cover;
 		}
+		#loginDugme{width: 9% !important;; line-height: 84% !important;}
+		#logoutDugme{width: 10% !important;; line-height: 84% !important;}
 
 		@media screen and (min-width: 768px) {
 			body {
@@ -61,6 +63,8 @@
 				background-position: center center;
 				background-size: cover;
 			}
+			#loginDugme{width: 9% !important;; line-height: 84% !important;}
+			#logoutDugme{width: 10% !important;; line-height: 84% !important;}
 		}
 
 		@media screen and (min-width: 1025px) {
@@ -106,9 +110,9 @@
 	<!-- zbog sec:authorize="!isAuthenticated()" ovo ce se prikazivati samo onima koji se nisu registrovali pa onda ulogovali -->
 	<blockquote class="blockquote text-center" th:style="'color:white; margin-top: 21px; color:yellow;'" sec:authorize="!isAuthenticated()">
 		<p class="mb-0" th:style="'text-align: center !important;'">
-			<a href="../users/showMyLoginPage" class="btn btn-secondary" th:style="'background-color:blue;color:yellow;width:4%;height:4%;line-height:85%;'">Login</a>
+			<a href="../users/showMyLoginPage" id="loginDugme" class="btn btn-secondary" th:style="'background-color:blue;color:yellow;width:4%;height:4%;line-height:85%;'">Login</a>
 			or
-			<a href="../users/signUp" class="btn btn-secondary" th:style="'background-color:green;color:yellow;width:5%;height:4%;line-height:85%;'">SignUp</a>
+			<a href="../users/signUp" id="logoutDugme" class="btn btn-secondary" th:style="'background-color:green;color:yellow;width:5%;height:4%;line-height:85%;'">SignUp</a>
 			so you can add movies to your favourites list.
 			<!--If you register and login to our page, you can add movies to favourites, and contact us via email.-->
 		</p>
